@@ -8,6 +8,10 @@ impl Rectangle {
     fn area(&self) -> u32 {
         self.width * self.height
     }
+
+    fn can_hold(&self, rectangle: &Rectangle) -> bool {
+        self.height > rectangle.height && self.width > rectangle.width
+    }
 }
 
 fn main() {
@@ -16,6 +20,13 @@ fn main() {
         width: dbg!(30 * scale),
         height: 50,
     };
+
+    let rect2 = Rectangle {
+        width: 15,
+        height: 60,
+    };
+
+    dbg!(rect1.can_hold(&rect2));
 
     let rect1 = dbg!(rect1);
 
