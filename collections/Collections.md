@@ -159,3 +159,68 @@ for b in "Зд".bytes() {
 `contains` searches a string.
 
 `replace` substitutes part of a string with another.
+
+# Hashmap
+
+Looking up data by key instead of index.
+
+## Creating a hash map
+
+```rust
+use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+```
+
+## Inserting into the hash map
+
+```rust
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+
+// Insert only if not present
+scores.entry(String::from("Yellow")).or_insert(50);
+```
+
+## Getting a value from a hash map
+
+```rust
+let team_name = String::from("Blue");
+let score = scores.get(&team_name)
+  .copied() // Copies the returning Option<&V> into Option<i32>
+  .unwrap_or(0); // Sets score to 0 if scores doesn't have an entry for the key
+```
+
+## Updating based on old value
+
+```rust
+use std::collections::HashMap;
+
+let text = "hello world wonderful world";
+
+let mut map = HashMap::new();
+
+for word in text.split_whitespace() {
+    let count = map.entry(word).or_insert(0);
+    *count += 1;
+}
+
+println!("{:?}", map);
+// {"world": 2, "hello": 1, "wonderful": 1}
+```
+
+## Iterating a hash map
+
+```rust
+for (key, value) in &scores {
+  println!("{key}: {value}");
+}
+```
+
+## Ownership
+
+When inserting references, they must be valid for as long as the hash map is valid.
+
+Owned values will be moved and the hash map will be the owner.
+
+Values implementing the `Copy` trait is copied into the hash map
